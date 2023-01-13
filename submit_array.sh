@@ -76,7 +76,7 @@ module load rhel7/default-ccl              # REQUIRED - loads the basic environm
 #! Insert additional module load commands after this line if needed:
 
 #! Full path to application executable:
-application="~/rds/hpc-work/Projects/AdvAnalysis/NLPAttackAnalysis/experiments/run.sh"
+application="~/rds/hpc-work/Projects/AdvAnalysis/NLPAttackAnalysis/experiments/run_array.sh"
 
 #! Run options for the application:
 options=""
