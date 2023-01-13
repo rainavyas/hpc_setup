@@ -36,20 +36,20 @@
 #! interrupted by node failure or system downtime):
 #SBATCH --no-requeue
 
-#! change to pascal or ampere:
+#! change to ampere / pascal:
 #SBATCH -p ampere
 
 #! sbatch directives end here (put any additional directives above this line)
 
 #! Notes:
-#! Charging is determined by GPU number*walltime. 
+#! Charging is determined by GPU number*walltime.
 
 #! Number of nodes and tasks per node allocated by SLURM (do not change):
 numnodes=$SLURM_JOB_NUM_NODES
 numtasks=$SLURM_NTASKS
 mpi_tasks_per_node=$(echo "$SLURM_TASKS_PER_NODE" | sed -e  's/^\([0-9][0-9]*\).*$/\1/')
 #! ############################################################
-#! Modify the settings below to specify the application's environment, location 
+#! Modify the settings below to specify the application's environment, location
 #! and launch method:
 
 #! Optionally modify the environment seen by the application
@@ -60,11 +60,9 @@ module load rhel8/default-amp              # REQUIRED - loads the basic environm
 
 #! Insert additional module load commands after this line if needed:
 
-#! Full path to application executable: 
-application="/rds/project/rds-8YSp2LXTlkY/experiments/yf286/semi-supervised-learning/experiments/wideresnet-5k-45k-ul-distillation/run/train.sh"
+#! Full path to application executable:
+application="/rds/hpc-work/Projects/Pruning/nlp_sample_prune/experiments/run.sh"
 
-#! Check the number of arguments. Ensure only a single argument for log path
-if [ "$#" -ne 5 ] ; then echo "Usage: $0 DATASET VERSION TEMPERATURE LOGs/train.txt ELOGs/train.txt" ; exit 100 ; fi
 
 #! Run options for the application:
 options=""
@@ -87,9 +85,6 @@ CMD="$application $@"
 
 #! Choose this for a MPI code using OpenMPI:
 #CMD="mpirun -npernode $mpi_tasks_per_node -np $np $application $options"
-
-#! Example command
-#!  
 
 
 ###############################################################
@@ -118,4 +113,7 @@ echo -e "\nnumtasks=$numtasks, numnodes=$numnodes, mpi_tasks_per_node=$mpi_tasks
 
 echo -e "\nExecuting command:\n==================\n$CMD\n"
 
-eval $CMD 
+eval $CMD
+
+# Example
+# sbatch ./submit.sh --prune_method pos --kept_pos A D V N --seed 1
