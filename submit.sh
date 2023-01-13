@@ -36,8 +36,8 @@
 #! interrupted by node failure or system downtime):
 #SBATCH --no-requeue
 
-#! Do not change:
-#SBATCH -p pascal
+#! change to pascal or ampere:
+#SBATCH -p ampere
 
 #! sbatch directives end here (put any additional directives above this line)
 
@@ -59,7 +59,6 @@ module purge                               # Removes all modules still loaded
 module load rhel8/default-amp              # REQUIRED - loads the basic environment
 
 #! Insert additional module load commands after this line if needed:
-module load python/3.8 cuda/10.0 cudnn/7.5_cuda-10.0
 
 #! Full path to application executable: 
 application="/rds/project/rds-8YSp2LXTlkY/experiments/yf286/semi-supervised-learning/experiments/wideresnet-5k-45k-ul-distillation/run/train.sh"
@@ -68,7 +67,7 @@ application="/rds/project/rds-8YSp2LXTlkY/experiments/yf286/semi-supervised-lear
 if [ "$#" -ne 5 ] ; then echo "Usage: $0 DATASET VERSION TEMPERATURE LOGs/train.txt ELOGs/train.txt" ; exit 100 ; fi
 
 #! Run options for the application:
-options="$1 $2 $3 >$4 2>$5"
+options=""
 
 #! Work directory (i.e. where the job will run):
 workdir="$SLURM_SUBMIT_DIR"  # The value of SLURM_SUBMIT_DIR sets workdir to the directory
@@ -84,10 +83,13 @@ np=$((numnodes * mpi_tasks_per_node))
 
 #! Choose this for a pure shared-memory OpenMP parallel program on a single node:
 #! (OMP_NUM_THREADS threads will be created):
-CMD="$application $options"
+CMD="$application $@"
 
 #! Choose this for a MPI code using OpenMPI:
 #CMD="mpirun -npernode $mpi_tasks_per_node -np $np $application $options"
+
+#! Example command
+#!  
 
 
 ###############################################################
