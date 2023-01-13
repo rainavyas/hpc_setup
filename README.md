@@ -1,13 +1,11 @@
 ## Getting Torch working on HPC 
 
 
-### My HPC files
-My SLURM submit script : [submit.sh](submit.sh) \
-my .bashrc : [.bashrc](bashrc)\
-python environment : [python_env.txt](python_env.txt)\
-requirements.txt : [requirements.txt](requirements.txt) 
+## Mode of Operation
 
-\*note that requirement.txt is not the same as the python environment, since installing a module can install multiple other modules, and secondly some libraries require external links to be downloaded
+Change the `application` in a `submit.sh` script to point to the desired `run.sh` script. Load the desired virtual environment in the `run.sh` script and then call the required python file.
+
+Example sbatch command at the bottom of each submit.sh script.
 
 ---
 ### Getting a basic working torch environment
