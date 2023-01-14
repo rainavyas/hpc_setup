@@ -61,7 +61,7 @@ module load rhel8/default-amp              # REQUIRED - loads the basic environm
 #! Insert additional module load commands after this line if needed:
 
 #! Full path to application executable:
-application="/rds/hpc-work/Projects/Pruning/nlp_sample_prune/experiments/run.sh"
+application="~/rds/hpc-work/Projects/Pruning/nlp_sample_prune/experiments/run.sh"
 
 
 #! Run options for the application:
